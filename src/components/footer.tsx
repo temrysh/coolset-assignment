@@ -35,9 +35,11 @@ export const Footer = ({
   return (
     <div className="flex items-center m-4">
       <div className="flex items-center h-[32px]">
-        <span className="text-[12px] text-[#71717A]">Rows per page:</span>
+        <span className="text-[12px] text-[--neutral-text]">
+          Rows per page:
+        </span>
         <select
-          className="text-[13px] text-[#020617] dark:text-[#ffffff] bg-[#ffffff] dark:bg-[#020617]"
+          className="text-[13px] text-[--foreground] bg-[--background]"
           value={rows}
           onChange={onRowsChange}
         >
@@ -47,8 +49,8 @@ export const Footer = ({
         </select>
       </div>
 
-      <div className="flex h-[32px] items-center ml-[32px] text-[#71717A]">
-        <span className="text-[12px] mr-[8px] min-w-[70px]">
+      <div className="flex h-[32px] items-center ml-[32px] text-[--neutral-text]">
+        <span className="text-[12px] mr-2 min-w-[70px]">
           {from}-{to} of {dataLength}
         </span>
         <div className="flex gap-[10px]">

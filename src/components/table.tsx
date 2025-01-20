@@ -14,10 +14,10 @@ type TableProps = {
 };
 
 export const Table = ({ list, order, onOrderChange }: TableProps) => (
-  <div className="overflow-scroll border border-[#E2E8F0] rounded-[4px] mx-4 text-[12px]">
+  <div className="overflow-scroll border border-[--neutral] rounded-[4px] mx-4 text-[12px]">
     <table className="w-full max-h-full">
       <thead className="sticky top-0">
-        <tr className="h-[41px] divide-x divide-[#E2E8F0] text-[#71717A] text-left bg-[#ffffff] dark:bg-[#020617]">
+        <tr className="h-[40px] divide-x divide-[--neutral] text-[--neutral-text] text-left bg-[--background]">
           <th className="px-4">Name</th>
           <th className="px-4">Section</th>
           <th className="px-4">Price (€)</th>
@@ -35,7 +35,8 @@ export const Table = ({ list, order, onOrderChange }: TableProps) => (
             </div>
           </th>
         </tr>
-        <tr className="h-[1px] bg-[#E2E8F0]">
+        {/* HACK: bottom border of sticky header fix */}
+        <tr className="h-[1px] bg-[--neutral]">
           <th />
           <th />
           <th />
@@ -43,13 +44,15 @@ export const Table = ({ list, order, onOrderChange }: TableProps) => (
         </tr>
       </thead>
 
-      <tbody className="divide-y divide-[#E2E8F0]">
+      <tbody className="divide-y divide-[--neutral]">
         {list.map(({ id, name, section, price, pricePer100g }) => (
-          <tr key={id} className="h-[48px] divide-x divide-[#E2E8F0]">
-            <td className="px-4 border-[#E2E8F0]">{name}</td>
-            <td className="px-4 border-[#E2E8F0]">{section}</td>
-            <td className="px-4 border-[#E2E8F0]">{price}</td>
-            <td className="px-4 border-[#E2E8F0]">{pricePer100g.toFixed(2)}</td>
+          <tr key={id} className="h-[48px] divide-x divide-[--neutral]">
+            <td className="px-4 border-[--neutral]">{name}</td>
+            <td className="px-4 border-[--neutral]">{section}</td>
+            <td className="px-4 border-[--neutral]">{price}</td>
+            <td className="px-4 border-[--neutral]">
+              {pricePer100g.toFixed(2)}
+            </td>
           </tr>
         ))}
       </tbody>
