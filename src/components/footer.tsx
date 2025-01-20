@@ -15,7 +15,10 @@ export const Footer = ({
   onPageChange,
   onRowsChange,
 }: FooterProps) => {
-  const from = useMemo(() => rows * page + 1, [page, rows]);
+  const from = useMemo(
+    () => Math.min(dataLength, rows * page + 1),
+    [dataLength, page, rows]
+  );
   const to = useMemo(
     () => Math.min(rows + from - 1, dataLength),
     [dataLength, from, rows]
@@ -45,7 +48,7 @@ export const Footer = ({
       </div>
 
       <div className="flex h-[32px] items-center ml-[32px] text-[#71717A]">
-        <span className="text-[12px] mr-[8px]">
+        <span className="text-[12px] mr-[8px] min-w-[70px]">
           {from}-{to} of {dataLength}
         </span>
         <div className="flex gap-[10px]">

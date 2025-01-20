@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
-import useData from "../utils/use-data";
-import calculatePricePer100g from "../utils/calculate-price-per-100g";
-
+import { useState, useMemo, useCallback, useEffect } from "react";
 import Header from "../components/header";
 import Table from "../components/table";
 import Footer from "../components/footer";
 import Filters from "../components/filters";
+import useData from "../utils/use-data";
+import calculatePricePer100g from "../utils/calculate-price-per-100g";
 
 export default function Home() {
   const [rows, setRows] = useState(10);
@@ -22,6 +21,10 @@ export default function Home() {
     [data]
   );
 
+  useEffect(() => {
+    setSelectedSections(sections);
+  }, []);
+
   // modify
   const dataWithPricePer100g = useMemo(
     () =>
@@ -34,12 +37,14 @@ export default function Home() {
 
   // filter
   const filteredData = useMemo(() => {
-    if (selectedSections.length === 0) return dataWithPricePer100g;
+    if (selectedSections.length === sections.length) {
+      return dataWithPricePer100g;
+    }
 
     return dataWithPricePer100g.filter(({ section }) =>
       selectedSections.includes(section.toLowerCase())
     );
-  }, [dataWithPricePer100g, selectedSections]);
+  }, [dataWithPricePer100g, sections.length, selectedSections]);
 
   // sort
   const sortedData = useMemo(() => {
@@ -69,21 +74,10 @@ export default function Home() {
     []
   );
 
-  const handleSectionsChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { value, checked } = event.target;
-
-      setPage(0);
-      setSelectedSections((prevSelectedItems) => {
-        if (checked) {
-          return [...prevSelectedItems, value];
-        } else {
-          return prevSelectedItems.filter((item) => item !== value);
-        }
-      });
-    },
-    []
-  );
+  const handleSectionsChange = useCallback((newSelectedSections: string[]) => {
+    setSelectedSections(newSelectedSections);
+    setPage(0);
+  }, []);
 
   return (
     <div className="w-full h-[100vh] overflow-hidden flex justify-center">
